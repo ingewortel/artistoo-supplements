@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ActModel</title>
+<link rel="stylesheet" href="src/style.css">
+<script src="src/sliders.js"></script>
+<script src="../build/artistoo.js"></script>
+<script>
+"use strict"
+
+
+/*	----------------------------------
+	CONFIGURATION SETTINGS
+	----------------------------------
+*/
+let config = {
+
+	// Grid settings
+	ndim : 2,
+	field_size : [500,300],
+	
+	// CPM parameters and configuration
+	conf : {
+		// Basic CPM parameters
+		torus : [false,false],				// Should the grid have linked borders?
+		T : 3,								// CPM temperature
+		
+		// Constraint parameters. 
+		// Mostly these have the format of an array in which each element specifies the
+		// parameter value for one of the cellkinds on the grid.
+		// First value is always cellkind 0 (the background) and is often not used.
+
+		
+		// Adhesion parameters:
+		J : [ 
+		 	[0,0],
+			[0,-4]
+		],
+		
+		// VolumeConstraint parameters
+		LAMBDA_V : [0,1],				// VolumeConstraint importance per cellkind
+		V : [0,500],					// Target volume of each cellkind
+		
+		LAMBDA_P : [0,1],
+		P : [0,240]
+		
+	},
+	
+	// Simulation setup and configuration: this controls stuff like grid initialization,
+	// runtime, and what the output should look like.
+	simsettings : {
+	
+		// Cells on the grid
+		NRCELLS : [1],						// Number of cells to seed for all
+											// non-background cellkinds.
+		// Runtime etc
+		BURNIN : 0,
+		RUNTIME : 40001,
+		RUNTIME_BROWSER : "Inf",
+		
+		// Visualization
+		CANVASCOLOR : "EEEEEE",
+		CELLCOLOR : ["000000"],
+		SHOWBORDERS : [true],				// Should cellborders be displayed?
+		BORDERCOL : ["FFFFFF"],				// color of the cell borders
+		zoom : 1,							// zoom in on canvas with this factor.
+		
+		// Output images
+		SAVEIMG : false,						// Should a png image of the grid be saved
+											// during the simulation?
+		
+		// Output stats etc
+		STATSOUT : { browser: false, node: true }, // Should stats be computed?
+		LOGRATE : 100							// Output stats every <LOGRATE> MCS.
+
+	}
+}
+/*	---------------------------------- */
+let sim, meter, prate = 5e-5
+
+
+function initialize(){
+	let custommethods = {
+		postMCSListener : postMCSListener,
+		initializeGrid : initializeGrid
+	}
+	sim = new CPM.Simulation( config, custommethods )
+
+
+	step()
+}
+
+function postMCSListener(){
+	
+		// add the initializer if not already there
+		if( !this.helpClasses["gm"] ){ this.addGridManipulator() }
+	
+		//prolif rate 
+		
+		let interval = 10
+		if( this.time % interval == 0 ){
+			for( let i of this.C.cellIDs() ){
+				if( this.C.getVolume(i) > this.C.conf.V[1]*0.95 && this.C.random() < prate*interval ){
+					this.gm.divideCell(i)
+					this.C.stats=[]
+				}
+			}
+		}
+		
+		
+		
+}
+	
+function initializeGrid(){
+	
+		// add the GridManipulator if not already there and if you need it
+		if( !this.helpClasses["gm"] ){ this.addGridManipulator() }
+	
+		this.gm.seedCellsInCircle( 1, 10, this.C.midpoint, 35 )
+
+}
+
+
+function step(){
+	for( let i = 0; i < 10; i++ ){
+		sim.step()
+	}
+
+	if( sim.conf["RUNTIME_BROWSER"] == "Inf" | sim.time+1 < sim.conf["RUNTIME_BROWSER"] ){
+		requestAnimationFrame( step )
+	}
+}
+
+function setSliders(){
+	document.getElementById("prate").value = prate*1000000
+}
+
+
+
+// No custom methods.
+</script>
+</head>
+<body onload="initialize();setSliders();initializeSliders()">
+<h1>Cell division</h1>
+
+<div style="width:400px">
+<p>
+Cellular Potts Model of dividing cells. Adjust the proliferation rate using 
+the slider below.
+</p>
+</div>
+
+<table width="500px">
+<tr width="100%">
+	<td style="width:20%">growth rate</td>
+	<td style="width:5%">0</td>
+	<td style="width:50%"> 
+		<div class="range-wrap">
+		  <input type="range" class="range" min="0" max="500" id="prate" oninput="prate=parseFloat(this.value/1000000)">
+		  <output class="bubble"></output>
+		</div>
+	</td>
+	<td style="width:20%">500x10<sup>-6</sup></td>
+</tr>
+</table>
+<br>
+
+
+
+</body>
+</html>
