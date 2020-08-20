@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>simple</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="src/style.css">
+<script src="src/sliders.js"></script>
+<script type="text/javascript" src="../../../build/artistoo.js"></script>
+<script type="text/javascript">
+
+let config = {
+
+	// Grid settings
+	ndim : 2,
+	field_size : [200,200],
+	
+	// CPM parameters and configuration
+	conf : {
+		// Basic CPM parameters
+		torus : [true,true],						// Should the grid have linked borders?
+		seed : 1,							// Seed for random number generation.
+		T : 10,								// CPM temperature
+		
+		// Constraint parameters. 
+		// Mostly these have the format of an array in which each element specifies the
+		// parameter value for one of the cellkinds on the grid.
+		// First value is always cellkind 0 (the background) and is often not used.
+				
+		// Adhesion parameters:
+		J: [[0,10], [10,0]],
+		
+		// VolumeConstraint parameters
+		LAMBDA_V: [0,5],					// VolumeConstraint importance per cellkind
+		V: [0,500],							// Target volume of each cellkind
+		
+		// PerimeterConstraint parameters
+		LAMBDA_P: [0,2],						// PerimeterConstraint importance per cellkind
+		P : [0,260],						// Target perimeter of each cellkind
+		
+		// ActivityConstraint parameters
+		LAMBDA_ACT : [0,200],				// ActivityConstraint importance per cellkind
+		MAX_ACT : [0,40],					// Activity memory duration per cellkind
+		ACT_MEAN : "geometric"				// Is neighborhood activity computed as a
+											// "geometric" or "arithmetic" mean?
+
+	},
+	
+	// Simulation setup and configuration
+	simsettings : {
+	
+		// Cells on the grid
+		NRCELLS : [1],						// Number of cells to seed for all
+											// non-background cellkinds.
+		// Runtime etc
+		BURNIN : 500,
+		RUNTIME_BROWSER : "Inf",
+		
+		// Visualization
+		CANVASCOLOR : "eaecef",
+		ACTCOLOR : [true],					// Should pixel activity values be displayed?
+		zoom : 2							// zoom in on canvas with this factor.
+
+	}
+}
+/*	---------------------------------- */
+let sim, meter
+function initialize(){
+	sim = new CPM.Simulation( config, {} )
+}
+
+function step(){
+	sim.step()
+	sim.step()
+	if( sim.conf["RUNTIME_BROWSER"] == "Inf" | sim.time+1 < sim.conf["RUNTIME_BROWSER"] ){
+		requestAnimationFrame( step )
+	}
+}
+
+function setSliders(){
+	document.getElementById("mact").value = config.conf.MAX_ACT[1]
+	document.getElementById("lact").value = config.conf.LAMBDA_ACT[1]
+}
+
+
+// For controlling the simulation
+function startSim(){
+	if( !sim.running ){
+		sim.toggleRunning()
+	}
+}
+
+function stopSim(){
+	sim.toggleRunning()
+}
+function killCells(){
+	for( let cid of sim.C.cellIDs() ){
+		sim.gm.killCell(cid)
+	}
+}
+
+</script>
+</script>
+
+
+<style type="text/css">
+
+</style>
+
+
+<body onload="initialize();setSliders();initializeSliders();step()">
+	
+<div id="sliders">
+	<table width="100%">
+	<tr>
+		<td style="width:20%">max<sub>act</sub></td>
+		<td style="width:5%">0</td>
+		<td style="width:70%"> 
+			<div class="range-wrap">
+			  <input type="range" class="range" min="0" max="100" id="mact" oninput="sim.C.getConstraint('ActivityConstraint').conf.MAX_ACT[1]=this.value" >
+			  <output class="bubble"></output>
+			</div>
+		</td>
+		<td style="width:5%">100</td>
+	</tr>
+	<tr>
+		<td style="width:20%">&lambda;<sub>act</sub></td>
+		<td style="width:5%">0</td>
+		<td style="width:70%"> 
+			<div class="range-wrap">
+			  <input type="range" class="range" min="0" max="1000" id="lact" oninput="sim.C.getConstraint('ActivityConstraint').conf.LAMBDA_ACT[1]=this.value">
+			  <output class="bubble"></output>
+			</div>
+		</td>
+		<td style="width:5%">1000</td>
+	</tr>
+	</table>
+</div>
+<div>
+	<button onclick="startSim()">start</button>
+	<button onclick="stopSim()">stop</button>
+	<button onclick="sim.time=0;killCells();sim.initializeGrid();startSim()">reset</button>
+	<br>
+</div>
+
+</body>
+</html>

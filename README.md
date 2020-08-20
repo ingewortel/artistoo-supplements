@@ -2,7 +2,7 @@
 
 This repository contains supplementary materials (source code and simulations) for the 
 manuscript *"Artistoo: build, share, and explore simulations of cells and tissues in the 
-web browser"* on our software package [Artistoo](github.com/ingewortel/artistoo). 
+web browser"* on our software package [Artistoo](https://github.com/ingewortel/artistoo). 
 
 This repository contains the following types of supplementary materials:
 
@@ -17,4 +17,4 @@ This repository contains the following types of supplementary materials:
 
 In addition, the repository contains a directory `build/` which contains the artistoo
 source code for completeness (this code can also be obtained from the 
-[Artistoo repository](github.com/ingewortel/artistoo) ).
+[Artistoo repository](https://github.com/ingewortel/artistoo) ).
