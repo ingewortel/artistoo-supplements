@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>simple</title>
+<meta charset="utf-8">
+<script type="text/javascript" src="../../../build/artistoo.js"></script>
+<script type="text/javascript">
+
+
+let config = {
+
+	// Grid settings
+	field_size : [50,50],
+	
+	// CPM parameters and configuration
+	conf : {
+		// Basic CPM parameters
+		torus : [true,true],						// Should the grid have linked borders?
+		seed : 1,							// Seed for random number generation.
+		T : 20,								// CPM temperature
+		J: [[0,-10], [-10,0]],
+		LAMBDA_V: [0,5],					// VolumeConstraint importance per cellkind
+		V: [0,400],							// Target volume of each cellkind
+		P : [0,220],
+		LAMBDA_P : [0,2]
+
+	},
+	
+	// Simulation setup and configuration
+	simsettings : {
+	
+		// Cells on the grid
+		NRCELLS : [1],						// Number of cells to seed for all
+											// non-background cellkinds.
+		BURNIN : 50,
+		RUNTIME_BROWSER : "Inf",
+		
+		// Visualization
+		CANVASCOLOR : "FFFFFF",
+		zoom : 2,							// zoom in on canvas with this factor.
+	}
+}
+
+let sim
+function initialize(){
+	sim = new CPM.Simulation( config, {} )
+	step()
+}
+
+
+function step(){
+	sim.step()
+	if( sim.conf["RUNTIME_BROWSER"] == "Inf" | sim.time+1 < sim.conf["RUNTIME_BROWSER"] ){
+		requestAnimationFrame( step )
+	}
+}
+
+</script>
+</script>
+
+
+<style type="text/css">
+body, html{
+	margin: 0 ; padding: 0;
+}
+
+</style>
+
+
+<body onload="initialize()">
+
+</body>
+</html>

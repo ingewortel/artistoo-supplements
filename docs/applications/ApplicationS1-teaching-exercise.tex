@@ -1,0 +1,154 @@
+\documentclass{article}
+
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{fixltx2e}
+\usepackage{color}
+\usepackage{hyperref}
+
+\title{Making a Cellular Potts Model of Collective Migration}
+\author{Inge Wortel \and Johannes Textor}
+\date{May 1st, 2020}
+
+\begin{document}
+
+\maketitle
+
+In this exercise, you are going to use the Cellular Potts modeling framework to create cells \emph{in silico}. You will first learn how to use the model's many parameters to create cells of realistic shapes and motility patterns. Then you will go a step further and model several migrating cells that interact with each other.
+
+\section*{Learning Goals}
+\begin{itemize}
+\item Understand how the different parameters of a Cellular Potts Model (CPM) interact with each other, and how this influences cell behavior. 
+\item Realize that it can be difficult to tune the parameters of a CPM.
+\item Apply this knowledge to create different modes of cell migration in the CPM, and explain how this helps understand those migration modes.
+\item Apply the CPM to investigate the dynamics of collective cell migration \emph{in silico}.
+\end{itemize}
+
+Please go to {\color{blue}\href{http://computational-immunology.org/cpm/collective.html}{computational-immunology.org/cpm/collective.html}}. This is an implementation of a special version of the Cellular Potts Model in which cells can migrate \cite{niculescu_crawling_2015}.
+Note that \emph{this web page does not work properly in Internet Explorer}. It does work in either Firefox, Chrome, or Safari -- so we recommend using any of those browsers for this exercise.
+
+\section*{Notes on the CPM} 
+
+%At {\color{blue}\href{http://computational-immunology.org/talks/2018-10-02-nijmegen/}{computational-immunology.org/talks/2018-10-02-nijmegen/}}, you can check back the lecture slides on the CPM.
+
+Remember that in a CPM, copy attempts have a higher chance of succeeding if they lower the total energy $H$ of the system. In other words, $\Delta H = H_\text{after copy} - H_\text{before copy}$ should be negative to guarantee that the copy attempt will work. Copy attempts with positive $\Delta H$ can still succeed, but do so with a lower probability that depends on the temperature of the system. In general, the formula for $\Delta H$ of a CPM looks something like this:
+
+\begin{equation}
+	\Delta H = \Delta H_\text{adhesion} + \Delta H_\text{Volume} + \Delta H_\text{...}  + ...
+\end{equation}
+
+Thus, we build up $\Delta H$ from all the different energetic factors we want the cell to consider -- and we can always add stuff to make the model more complex. But what parameters do we need to tune to get realistic cells? In the following exercises, you will get a feel for how you can model cell behavior with a CPM by tuning the parameters that control the energy $\Delta H$. 
+
+\section*{Exercises} 
+
+\subsection*{A very basic CPM}
+
+In this exercise, we will first examine a very basic CPM in which cells do not (yet) migrate.
+Make sure that the field is empty (hit refresh or "remove all cells"), and that the parameters
+have the following values:
+
+\begin{center}
+\setlength{\tabcolsep}{3pt}
+\small
+	\begin{tabular}{l l l l l l l l l l }
+		Adhesion\textsubscript{cell-matrix} & Adhesion\textsubscript{cell-cell} &
+			Volume & $\lambda$\textsubscript{Volume} & 
+			Perimeter & $\lambda$\textsubscript{P} &
+			Max\textsubscript{Act} & $\lambda$\textsubscript{Act} &
+			T & Framerate \\ \hline
+		20 & 0 & 500 & 50 & 340 & 0 & 0 & 0 & 20 & 1 \\
+	\end{tabular}
+
+\end{center}
+
+We will now investigate how the basic CPM parameters -- controlling adhesion, cell volume, and cell perimeter (circumference) -- influence behavior (this means you can ignore the $\lambda$\textsubscript{Act} and Max\textsubscript{Act} parameters for now). This exercise is meant mostly to give you an idea of what the CPM parameters do, and the questions are to guide your thinking -- so you don't have to write everything down. Try to spend no longer than 30-40 minutes on this exercise before continuing to the next.
+
+\begin{enumerate}
+	\item Make sure all the parameters are set as in the table above, click "seed cell" and then "start". What do you see? What kind of motion does this cell have?
+	\item Now set the Adhesion\textsubscript{cell-matrix} to 0. What happens to the cell? Why do you think that happens? (Hint: look back to the description of the CPM and adhesion energy in the lecture...) Also try a negative value for Adhesion\textsubscript{cell-matrix}. What is the meaning of positive or negative adhesion values here?
+	\item \textit{(Optional)} Instead of setting the Adhesion\textsubscript{cell-matrix} back to 20, try setting the Adhesion\textsubscript{cell-cell} to -20 while having the Adhesion \textsubscript{cell-matrix} still at 0. Does that have the effect that you expected? Why/why not do you think that is? Hint: try drawing a grid like you saw in the lecture for a copy attempt you are interested in. Do the two adhesion energies change in the same way for that copy attempt?
+	\item Return to the parameters in the table above. With these parameters, the cell is given an ideal volume (500 pixels), and a "level of importance" of this volume for the energy ($\lambda$\textsubscript{Volume}). Try making the cell bigger or smaller (what parameter should you change?). How can you make the volume unimportant for the energy -- and what happens then? What happens when you make $\lambda$\textsubscript{Volume} really large (say, 1000)?
+	\item So far, we have considered $\Delta H$ with only terms for adhesion energy and cell volume. We will now investigate the effect of the cell perimeter (circumference). The cell already has a target perimeter (340), but this is currently not taken into account in the calculation of $\Delta H$. For that, we need to make $\lambda$\textsubscript{P} non-zero. Try setting it to 2. What happens to the cell? Try making the cell "membrane" more or less ruffled. How would you do that?
+\item Set the perimeter to 340 and $\lambda$\textsubscript{P} to 2. Now change the Adhesion\textsubscript{cell-matrix} to 0 again. Does this have the same effect as it did in question 2? Why do you think that is?
+\item \textit{(Optional)} Play around with the volume and perimeter parameters for a while (using the adhesion parameters from the table, or try your own). How can you change the cell? Can you change the parameters independently of each other? And what happens if you change the temperature?
+\end{enumerate} 
+
+
+\subsection*{Cell migration: the Act model}
+
+We will now investigate the Act model, an extension of the CPM that allows the cells to migrate \cite{niculescu_crawling_2015}. This model adds an extra term to the system energy, so that:
+
+\begin{equation}
+	\Delta H = \Delta H_\text{adhesion} + \Delta H_\text{Volume} + \Delta H_\text{Perimeter} + \Delta H_\text{Act}
+\end{equation}
+
+In this model, pixels that were recently added to the cell remember their recent "protrusive activity". This makes them more likely to protrude again. This positive feedback is controlled by the energy term $\Delta H_\text{Act}$, which is negative (favourable!) when a recently active pixel tries to copy itself into a less active pixel. The Act model has two extra parameters: $\lambda$\textsubscript{Act}, which controls how important the positive feedback is relative to the other $\Delta H$ energies, and Max\textsubscript{Act}, which determines how long pixels "remember" that they were active. In this exercise, we will see what happens when we vary those two parameters of the model. In particular, we will see that we can reproduce two very different "modes" of migration: amoeboid and keratocyte-like (see lecture).
+
+Before starting this exercise, please refresh the page and ensure that the parameters of the CPM are set as follows:
+
+\begin{center}
+\setlength{\tabcolsep}{3pt}
+\small
+	\begin{tabular}{l l l l l l l l l l }
+		Adhesion\textsubscript{cell-matrix} & Adhesion\textsubscript{cell-cell} &
+			Volume & $\lambda$\textsubscript{Volume} & 
+			Perimeter & $\lambda$\textsubscript{P} &
+			Max\textsubscript{Act} & $\lambda$\textsubscript{Act} &
+			T & Framerate \\ \hline
+		20 & 0 & 500 & 50 & 340 & 2 & 20 & 0 & 20 & 1 \\
+	\end{tabular}
+
+\end{center}
+
+\begin{enumerate}
+	\item Seed a cell and click "start". You should now see colored pixels at the border of the cell, which indicate the "activity" that pixels remember (because we have set Max\textsubscript{Act} to 20). Other than the color of the pixels, does the cell behave in a different way than with Max\textsubscript{Act} = 0? Why/why not?
+	\item Set $\lambda$\textsubscript{Act} to 100. Would you describe this movement as random or persistent?
+	\item \textit{(Optional)} What happens when you set $\lambda$\textsubscript{P} to 0 now? Why do you think that is? (Reset it to 2 before going to the next question)
+	\item What happens when you increase $\lambda$\textsubscript{Act} further? (Try steps of 100).
+	\item \textit{(Optional)} If you increase $\lambda$\textsubscript{Act} to very high values (eg 1000), the cell is prone to breaking in pieces. Can you fix that by altering some other CPM parameter again? (Note: you may have to increase $\lambda$\textsubscript{Act} further when you have done this... Does that make sense to you?)
+	\item Reset $\lambda$\textsubscript{Act} to 0, change Max\textsubscript{Act} to 80, and repeat questions 1,2, and 4 above. What do you see? 
+	\item \textit{(Optional)} If you have time, play around with different combinations of $\lambda$\textsubscript{Act} and Max\textsubscript{Act}. Can you get a clue of what they are doing -- beyond the mathematical description given above?
+	\item \textit{(Optional)} Try halving or doubling the cell's target volume. That won't work. What do you need to change to get the same behavior as before? What does that mean for your model (in other words: to what extent are your choices of parameters important for the behaviour you see? How worried should you be about getting parameters "wrong" and drawing the wrong conclusions?)? 
+	\item The nice thing about computer models is that you know exactly which "rules" you put in, and therefore that those are the only rules that the cells will follow. However, the behavior that follows from those "rules" is not always obvious (that's why we run the simulation in the first place!). In fact, the most interesting computer models can sometimes produce behavior that you did not explicitly put in there. We call this "emergent" behavior. Can you think of an example of emergent behavior in the Act model? What does that tell you about migration in a living cell?
+\end{enumerate} 
+
+
+\subsection*{Migration in a multicellular system}
+
+In this last exercise, we will investigate what happens when there are many cells. Before starting, please refresh the page to clear the grid, and then ensure that the parameters have the following values:
+
+\begin{center}
+\setlength{\tabcolsep}{3pt}
+\small
+	\begin{tabular}{l l l l l l l l l l }
+		Adhesion\textsubscript{cell-matrix} & Adhesion\textsubscript{cell-cell} &
+			Volume & $\lambda$\textsubscript{Volume} & 
+			Perimeter & $\lambda$\textsubscript{P} &
+			Max\textsubscript{Act} & $\lambda$\textsubscript{Act} &
+			T & Framerate \\ \hline
+		20 & 0 & 200 & 50 & 180 & 2 & 20 & 200 & 20 & 5 \\
+	\end{tabular}
+
+\end{center}
+
+Note that the framerate is not actually a parameter of the model, but it specifies how often the program draws the updated grid (eg framerate of 5 means visualize only 1 in every 5 "frames" of the movie). Setting it to 5 will speed up the animation.
+
+\begin{enumerate}
+	\item To seed many cells at once, click "+100 cells" (this will take a while...). What do you see?
+	\item Now, refresh the page, reset the parameters, increase Max\textsubscript{Act} to 80, and wait for a while to let the cells adjust. What happens? How is this different from what you saw with Max\textsubscript{Act} = 20?
+	\item Try other values of Max\textsubscript{Act} in between 20 and 80. What happens as you gradually increase Max\textsubscript{Act}?
+	\item \textit{(Optional)} What happens when you set Adhesion\textsubscript{cell-cell} to a negative value?
+	\item To what extent are your conclusions dependent on the density of cells on your grid? How could you test that?
+\end{enumerate}
+
+
+
+\bibliographystyle{abbrv}
+\bibliography{ref.bib}
+
+
+\end{document}
+
+

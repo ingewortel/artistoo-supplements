@@ -1,0 +1,333 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/white.css">
+
+<!-- CSS CODE --> 
+<!-- ___________________________________________________________ --> 
+<style type="text/css">
+
+.reveal {
+	text-rendering: optimizeSpeed;
+}
+
+
+.reveal section { text-align: left; }
+.reveal section img { border: none; box-shadow: none;  }
+.reveal section table td { vertical-align: top }
+.reveal h1 { 
+	font-size: 120%;
+	/*background-color: black;*/
+	color: #1874cd;
+	font-weight: normal;
+	border-bottom: 1px solid #1874cd;
+	margin: -.55em 0 .5em 0;
+	padding: 0.2em;
+	text-transform: none;
+	text-align: left;
+	font-variant: normal;
+}
+.reveal li{
+	margin-bottom: .2em;
+}
+/*.reveal .slides > section { border: 1px solid black } */
+.reveal video, .reveal iframe, .reveal img{
+  max-width: none !important;
+  max-height: none !important; 
+}
+
+em {
+	color: #1874cd;
+}
+
+.source{
+	font-size: 50% !important;
+	font-style: italic !important;
+}
+
+a{
+	font-size:70% !important;
+	color:#000000 !important;
+}
+
+
+tr, td {
+	border: none !important;
+}
+
+#cssTable td 
+{
+    text-align:center; 
+    vertical-align:middle;
+    table-layout:fixed;
+    width: 33%;
+}
+
+.grid td {
+	padding: 0 !important;
+}
+
+.reveal h4 {
+	color: #1874cd;
+}
+
+.affil {
+	margin-bottom: 1em !important;
+	margin-top: 2.5em !important;
+}
+.basic {
+	margin-bottom: 1.5em !important;
+}
+
+.nomargin {
+	margin-bottom: -0.3em !important;
+	margin-top: -0.7em !important;
+}
+
+.left-align {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+strong {
+	color : #e00000;
+	font-weight: normal !important;
+}
+
+.fragment.current-visible.visible:not(.current-fragment) {
+    display: none;
+    height:0px;
+    line-height: 0px;
+    font-size: 0px;
+}
+
+.reveal .slides section .fragment.fade-out {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.fade-out.visible {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    height:0px;
+    line-height: 0px;
+    font-size: 0px; }
+
+.reveal .slides section .fragment.highlight-current.current-fragment {
+      color: #e00000; 
+    }
+
+.reveal .slides section .fragment.highlight-strong {
+  opacity: 1;
+  visibility: visible; }
+
+.reveal .slides section .fragment.highlight-strong.visible {
+  color: #e00000; }
+
+.reveal .slides section .fragment.fade-down {
+        opacity: 1;
+        visibility: visible;
+    }
+    .reveal .slides section .fragment.fade-down.visible,
+    .reveal .slides section .fragment.visible:not(.current-fragment) {
+        color: black;
+    }
+    .reveal .slides section .fragment.fade-down,
+    .reveal .slides section .fragment.current-fragment {
+        color: #e00000;
+    }
+
+.slides .footer{
+  position:absolute;
+  bottom: 0%;
+  left: 0%;
+}
+
+
+
+
+
+</style>
+
+<!-- TYPESETTING SCRIPTS --> 
+<!-- ___________________________________________________________ --> 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+	messageStyle: 'none',
+	tex2jax: {
+		inlineMath: [['$','$'],['\\(','\\)']] ,
+		skipTags: ['script','noscript','style','textarea','pre']
+	},
+	skipStartupTypeset: true
+});
+MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub ] );
+MathJax.Hub.Queue( Reveal.layout );
+Reveal.addEventListener( 'slidechanged', function( event ) {
+	MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub, event.currentSlide ] );
+} )
+</script>
+
+<script type="text/javascript" 
+  src="MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+<script type="text/javascript">
+	function initMathJax(){
+		MathJax.Hub.Config({
+			messageStyle: 'none',
+			tex2jax: {
+				inlineMath: [['$','$'],['\\(','\\)']] ,
+				skipTags: ['script','noscript','style','textarea','pre']
+			},
+			skipStartupTypeset: true,
+			imageFont: null
+		});
+
+		// Typeset followed by an immediate reveal.js layout since
+		// the typesetting process could affect slide height
+		//MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub ] );
+		//MathJax.Hub.Queue( Reveal.layout );
+
+		// Reprocess equations in slides when they turn visible
+		//Reveal.addEventListener( 'slidechanged', function( event ) {
+		//	MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub, event.currentSlide ] );
+		//} );
+	}
+</script>
+
+</head>
+<body onload="initMathJax()">
+<div class="reveal">
+<div class="slides">
+
+<!-- SLIDES --> 
+<!-- Add slides as '<section>' -->
+<!-- ___________________________________________________________ --> 
+
+
+<section style="height:100%">
+	<p align="center" style="font-size:75%"> 2020-05-01 Example slides</p>
+	<br>
+	<h3 align="center" style="font-size:150%; color:#0D6A90"> Artistoo: </h3>
+	<p class="basic" align="center" style="font-size:120%; color:#0D6A90">Build, share, and explore interactive simulations of cells and tissues in the web browser</p>
+	<br>
+	<p class="basic" align="center" style="font-size:75%" class="affil">
+		<b> Inge Wortel</b> <br>
+		inge.wortel@radboudumc.nl <br>
+		<span> Department of Tumor Immunology, Radboudumc, Nijmegen, the Netherlands
+		</span>
+	</p>
+			
+	<img style="width: 100%; height: auto; display:block; position: absolute; bottom:0em; left: 0em" src="media/nijmegen.png">	
+	<img style="width: 50%; height: auto; display:block; position: absolute; bottom:3em; left: 8em" src="media/ru-rumc.jpg">
+</section>
+<!-- xxxxxxxxxxxxxxxxxxxx -->
+
+
+
+
+
+<section>
+<h1>The Cellular Potts Model (CPM) </h1>
+
+<!--<div style="width:20%;float:right">
+<div style="width:50%; float:left">
+	<iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: 0; padding:0" 
+		data-src="simulations/CPMsimple.html">
+	</iframe>
+</div>
+<div style="width:50%; float:right">
+	<iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: 0; padding:0" 
+		data-src="simulations/CPMsimple2.html">
+	</iframe>
+</div>
+</div>-->
+<div style="width:40%;float:left">
+<p>Pixels belong to cells, which <br>move by copying pixels: </p>
+<img src = "figures/cpm-tim.svg" width="100%">
+</div>
+<div style="width:55%;float:right">
+<p>Copy <strong>success</strong> chance (P<sub>copy</sub>) is higher when it helps the cell:</p>
+<table id="cssTable" style="width:100%">
+<tr><td>Stay together:</td><td>Maintain its size:</td><td>Maintain its membrane:</td></tr>
+<tr><td><iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: auto; padding:0" 
+		data-src="simulations/CPMadhesion.html">
+	</iframe></td>
+	<td><iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: auto; padding:0" 
+		data-src="simulations/CPMsize.html">
+	</iframe></td>
+	<td><iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: auto; padding:0" 
+		data-src="simulations/CPMsimple2.html">
+	</iframe></td></tr>
+<tr>	<td style="text-align:right">$\searrow$</td>
+		<td style="text-align:center">$\downarrow$</td>
+		<td style="text-align:left">$\swarrow$</td></tr>
+<tr><td></iframe></td>
+	<td><iframe width="100px" height="100px" scrolling="no" 
+		style="display:block; margin: auto; padding:0" 
+		data-src="simulations/CPMsimple.html">
+	</iframe></td>
+	<td></td></tr>
+</table>
+
+
+</div>
+</section>
+
+
+
+<section style="height:100%">
+<h1>Migration: Act model </h1>
+
+<div style="width:43%;float:right">
+<iframe width="420" height="600" scrolling="no" 
+	style="display:block; margin: 0; padding:0" 
+	data-src="simulations/CPM2D.html"></iframe>
+</div>
+<div style="width:55%;float:left">
+	<p>Cells move if we add <strong>positive feedback</strong>
+	on protrusive <strong>activity</strong> ($\approx$ actin polymerization)<sup>1</sup>:</p>
+	<img src="figures/actmodel.svg" width="100%">
+	<table>
+		<tr><td>Parameters:</td></tr>
+		<tr><td><strong>&lambda;<sub>act</sub></strong></td><td style="vertical-align:middle">$\approx$</td><td> protrusive <strong>force</strong> </td></tr>
+		<tr><td style="vertical-align:middle"><strong>max<sub>act</sub></strong></td><td style="vertical-align:middle">$\approx$</td><td> polymerized actin <strong>lifetime</strong></td></tr>
+	</table>
+		
+
+</div>
+
+<p style="position:absolute; bottom:0em; left:0em">
+	<span style="font-size:60%"><sup>1</sup>Niculescu et al. PLoS Computational Biology, 2015. </span> 
+</p>
+
+</section>
+
+<section>
+<h1>See also:</h1>
+<p><a href="https://revealjs.com/#/">https://revealjs.com/#/</a></p>
+</section>
+
+<!-- xxxxxxxxxxxxxxxxxxxx -->
+
+</div>
+</div>
+<script src="reveal.js"></script>
+<script>
+Reveal.initialize({
+	controls: false,
+	history: true,
+	center: false,
+	margin: .1,
+	slideNumber : true,
+	transition: 'none',
+	viewDistance: 2
+});
+</script>
+</body>
+</html>
