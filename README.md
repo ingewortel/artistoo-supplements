@@ -3,6 +3,8 @@
 This repository contains supplementary materials (source code and simulations) for the 
 manuscript *"Artistoo: build, share, and explore simulations of cells and tissues in the 
 web browser"* on our software package [Artistoo](https://github.com/ingewortel/artistoo). 
+See also the [web interface](https://ingewortel.github.io/artistoo-supplements)
+for easy access to supplementary files.
 
 This repository contains the following types of supplementary materials:
 
