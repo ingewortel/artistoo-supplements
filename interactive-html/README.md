@@ -7,6 +7,9 @@ interactive simulation from your web browser, please download the complete repos
  An isolated HTML file copied to some other folder will therefore not work;
 please copy the entire directory or update the paths in the HTML file.
 
+Alternatively, for online access, visit 
+[https://ingewortel.github.io/artistoo-supplements](https://ingewortel.github.io/artistoo-supplements).
+
 
 ### Interactive Simulation S1
 An example of an explorable simulation, as depicted in Figure 1b. Drag the sliders to 

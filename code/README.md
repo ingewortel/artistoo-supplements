@@ -16,9 +16,12 @@ will be missing.
 (Note that while no software installation is required for browser simulations, the 
 console simulations rely on nodejs and require users to install node and its packages).
 
-For Morpheus simulations, model files are provided in xml format. Open Morpheus (v2.1.0) 
-and click ”open” to select the correct xml file; then click ”start”. Users may have to
-install gnuplot manually to get Morpheus to work.
+For Morpheus simulations, model files are included in the Morpheus program. Open Morpheus 
+(v2.1.0) and select the correct xml file under "Examples" (as listed under Materials and
+Methods); then click ”start”. To alter parameter values in the xml file, right click
+the file in the menu on the left and choose "show XML". Copy the code to a local file,
+make your changes, and load your updated file by clicking "open". 
+Note that users may have to install gnuplot manually to get Morpheus to work.
 
 A list of provided code follows below.
 
@@ -39,18 +42,4 @@ Node version of the ”Dividing cells” simulation in Figure 1c. This Artistoo 
 
 
 ### Source Script S5
-Morpheus version of the ”Game of Life” simulation in Figure 1c. This Morpheus model file corresponds to Interactive Simulation S2.
-
-### Source Script S6
-Morpheus version of the ”Cell migration” simulation in Figure 1c. This Morpheus model file corresponds to Interactive Simulation S3.
-
-### Source Script S7
-Morpheus version of the ”Cell sorting” simulation in Figure 1c. This Morpheus model file corresponds to Interactive Simulation S4.
-
-
-### Source Script S8
-Morpheus version of the ”Dividing cells” simulation in Figure 1c. This Morpheus model file corresponds to Interactive Simulation S5.
-
-
-### Source Script S9
 Artistoo node script to run the cell sorting model with a variable grid size; corresponds to Figure 1d.

@@ -7,13 +7,13 @@ web browser"* on our software package [Artistoo](https://github.com/ingewortel/a
 This repository contains the following types of supplementary materials:
 
 - *Source code:* the `code/` folder contains node scripts of Artistoo simulations used
-	to assess performance, as well as xml format model files of the same simulations 
-	built in the Morpheus framework. See below for details on how to use these files;
+	to assess performance. See the README in `code/` for details on how to use these files;
 - *Interactive simulations* the `interactive-html/` folder contains examples of 
-	interactive Artistoo simulations built as HTML pages. See below for access.
+	interactive Artistoo simulations built as HTML pages. 
+	See the README in `interactive-html/`.
 - *Applications:* the `applications/` folder contains example applications of Artistoo,
 	showing how interactive simulations can facilitate teaching, research, and science 
-	dissemination. See below for details.
+	dissemination. See the README in `applications/` for details.
 
 In addition, the repository contains a directory `build/` which contains the artistoo
 source code for completeness (this code can also be obtained from the 
