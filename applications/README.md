@@ -13,7 +13,7 @@ provided so that readers can adapt the exercise for their own purposes.
 
 ### Application S2: Slide set
 An example slideshow containing a live Artistoo simulation. The slides were built using 
-the [https://revealjs.com](revealjs framework), which allows users to build slidesets in 
+the [revealjs framework](https://revealjs.com), which allows users to build slidesets in 
 HTML. To view, please download the repository and open 
 `applications/slides-example/index.html` in your web browser. The simulations here use the 
 artistoo build in the `build/` folder, so if files are moved elsewhere, please check and 
