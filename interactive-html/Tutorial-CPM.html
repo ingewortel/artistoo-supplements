@@ -160,9 +160,13 @@ grid and to see the adhesion energy after the changes. </p>
 </div>
 
 <p>Note that the simulation start with random assignment of pixels to the "cell" or
-"background". Over time, pixels with the same identity tend to cluster together in space,
-and finally, the grid has only one identity left (it is then either empty, or completely
-filled with one cell).</p>
+"background". Over time, pixels with the same identity tend to cluster together in space.
+This happens because the system tries to minimize its energy, 
+and therefore its number of interfaces: the number of different cell contacts (and thus
+the energetic penalty) decreases when pixels of the same cell cluster together. 
+Finally, as time progresses, the grid has only one identity left (it is then either empty, 
+or completely filled with one cell)&mdash;after all, the best way to minimize contact
+energy is to have no interfaces at all! </p>
 
 
 <p>The same principle applies when there is more than one cell, except now we have to define
@@ -174,11 +178,11 @@ one of the cells and the background \((J_\text{cell,bg})\):</p>
 	<iframe src="./frame-adhesion-multi.html" width="100%" height="360px"></iframe>
 </div>
 
-<p>Again, after enough time passes, the grid ends up homogeneous. This happens because
-the energetic penalty of cell-cell or cell-background interfaces means that there is 
-a simple way to have no penalty: removing all the interfaces! With the tendency
+<p>Again, after enough time passes, the grid ends up homogeneous because it is 
+energetically beneficial to remove all the interfaces. With the tendency
 of the CPM to minimize the global energy, we eventually end up in this minimum energy,
-steady state scenario. If we wish to have real cells, we need to expand our Hamiltonian.
+steady state scenario. If we wish to have real cells that don't just disappear, 
+we need to expand our Hamiltonian.
 </p>
 
 
