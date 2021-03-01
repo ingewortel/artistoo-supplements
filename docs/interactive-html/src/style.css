@@ -8,6 +8,55 @@ td {
 	 vertical-align: top;
 }
 
+a{
+	text-decoration:none;
+	color: DeepSkyBlue;
+}
+
+a:hover {
+	color: gray;
+}
+
+iframe{
+	border: none;
+}
+
+.journal{
+	font-style:italic;
+}
+
+cite{
+	font-style: normal;
+}
+
+.ref{
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+.sliders {
+	font-size:80%;
+}
+
+.container {
+	max-width:600px;
+	 margin:auto;
+	 text-align:justify;
+}
+
+.simcontainer {
+	text-align:center;
+}
+
+.homebtn{
+	font-weight:bold;
+	font-size:120%;
+	color:white;
+	background-color:black;
+	border: none;
+	padding:10px;
+}
+
 .range {
   -webkit-appearance: none;
   width: 100%;
