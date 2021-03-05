@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
 <title>ActModel</title>
 <link rel="stylesheet" href="src/style.css">
 <script src="src/sliders.js"></script>
@@ -88,6 +90,11 @@ function initialize(){
 		 }
 
 	sim = new CPM.Simulation( config, custommethods )
+	sim.Cim = new CPM.Canvas( sim.C, {
+		zoom:sim.conf.zoom, 
+		parentElement : document.getElementById("sim")
+	} )
+	sim.helpClasses[ "canvas" ] = true
 	step()
 }
 
@@ -175,16 +182,23 @@ function setSliders(){
 </script>
 </head>
 <body onload="initialize();setSliders();initializeSliders()">
+<button class="homebtn" onclick="window.location.href='../index.html'">Home</button>
+
+<div class="container">
+
 <h1>Cell migration</h1>
 
-<div style="width:400px">
+<div>
 <p>
-Cellular Potts Model of cell migrating between obstacles. Adjust the max<sub>act</sub> and 
-&lambda;<sub>act</sub> parameters using the sliders below.
+Cellular Potts Model of cell migrating between obstacles. You can adjust the max<sub>act</sub> and 
+&lambda;<sub>act</sub> parameters using the sliders below. This is just a small demo of the 
+model as used in Figure 1C; for a full explorable (including model explanation), 
+check out <a href="InteractiveS1-ActModel.html">this page</a>.
 </p>
 </div>
 
-<table width="400px">
+<div class="simcontainer" id = "sim">
+<table>
 <tr>
 	<td style="width:20%">max<sub>act</sub></td>
 	<td style="width:5%">0</td>
@@ -210,7 +224,9 @@ Cellular Potts Model of cell migrating between obstacles. Adjust the max<sub>act
 </table>
 <br>
 
+</div>
 
+</div>
 
 </body>
 </html>

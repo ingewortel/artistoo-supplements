@@ -8,6 +8,68 @@ td {
 	 vertical-align: top;
 }
 
+<<<<<<< HEAD
+=======
+a{
+	text-decoration:none;
+	color: DeepSkyBlue;
+}
+
+a:hover {
+	color: gray;
+}
+
+iframe{
+	border: none;
+}
+
+.journal{
+	font-style:italic;
+}
+
+cite{
+	font-style: normal;
+}
+
+.ref{
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+.sliders {
+	font-size:80%;
+}
+
+.container {
+	max-width:600px;
+	 margin:auto;
+	 text-align:justify;
+}
+
+.mathjaxcontainer{
+	max-width:600px;
+	margin:auto;
+	display: block;
+  overflow: auto;
+}
+
+
+
+.simcontainer {
+	text-align:center;
+	overflow: auto
+}
+
+.homebtn{
+	font-weight:bold;
+	font-size:120%;
+	color:white;
+	background-color:black;
+	border: none;
+	padding:10px;
+}
+
+>>>>>>> master-backup
 .range {
   -webkit-appearance: none;
   width: 100%;
@@ -64,3 +126,7 @@ td {
 body {
   margin: 2rem;
 }
+
+
+::-webkit-scrollbar { -webkit-appearance: none; height: 7px; width: 7px} 
+::-webkit-scrollbar-thumb { border-radius: 4px; background-color: rgba(0,0,0,.5); box-shadow: 0 0 1px rgba(255,255,255,.5); }

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
   <base data-ice="baseUrl">
   <title data-ice="title">Supplements</title>
   
@@ -12,10 +14,6 @@
      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-</head>
-<body class="layout-container" data-ice="rootContainer">
-
 <style>
 /*.li {
 	list-style-type: none!important;
@@ -36,16 +34,15 @@ padding-right:10px;
 }
 .mainimg h1 {
   margin-bottom: 10px;
-  font-size: 34px;
   font-weight: 300;
   border-bottom: solid 0px #ddd;
   text-align: center;
-  font-size: 400%;
+  font-size: 300%;
 }
 
 .mainimg h2 {
 	text-align: center;
-	font-size:200%;
+	font-size:150%;
 	border-bottom: solid 0px;
 }
 
@@ -68,9 +65,13 @@ padding-right:10px;
    bottom: 0;
 }
 </style>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+
 
 <div class="mainimg" >
-    	<div style="text-align: left; margin-left: 20px; padding-left: 10px; padding-top: 4em; color: white">
+    	<div style="text-align: left; margin-left: 20px;  margin-right: 20px; padding-left: 10px;padding-right: 10px; padding-top: 4em; padding-bottom:1em; color: white">
         <h1>
           Supplementary Materials
         </h1>
@@ -92,11 +93,20 @@ padding-right:10px;
 
 <div class="row">
 	<div class="col-md-6 col-lg-3 col-xl-2">
-		<a href="./interactive-html/InteractiveS1-ActModel.html"><img src="./img/sim1.png" width="100%"></a>
+		<a href="./interactive-html/Tutorial-CPM.html"><img src="./img/tutorial.png" width="100%"></a>
 		<h2>Simulation 1</h2>
-		<p>An example of an explorable simulation, as depicted in Figure 1b. Drag the sliders to 
-change parameters in this simulation of a migrating cell; see <a href="https://doi.org/10.1371/journal.pcbi.1004280">(Niculescu et al., 2015)</a>
-for details on the model used.
+		<p>This explorable explains the algorithm and dynamics behind the Cellular Potts Model.
+	<br><br><br></p>
+		<div class="bottom">
+		<p><a href="./interactive-html/Tutorial-CPM.html" class="btn btn-success">Try &raquo;</a></p>
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-3 col-xl-2">
+		<a href="./interactive-html/InteractiveS1-ActModel.html"><img src="./img/sim1.png" width="100%"></a>
+		<h2>Simulation 2</h2>
+		<p>This explorable describes a CPM extension that lets cells migrate actively, 
+		as depicted in Figure 1b.
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS1-ActModel.html" class="btn btn-success">Try &raquo;</a></p>
@@ -105,10 +115,10 @@ for details on the model used.
 	
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<a href="./interactive-html/InteractiveS2-GameOfLife.html"><img src="./img/sim2.png" width="100%"></a>
-		<h2>Simulation 2</h2>
-		<p>Interactive version of the ”Game of Life” simulation in Figure 1c. This classic model by 
-	John Conway is a Cellular Automaton (CA), in which pixels switch between two states (0-1)
-	 according to the number of neighbouring pixels in state 1.
+		<h2>Simulation 3</h2>
+		<p>Learn all about the ”Game of Life” simulation from Figure 1c, a 
+		classic model by John Conway that is surprisingly interesting despite its 
+	simple rules.
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS2-GameOfLife.html" class="btn btn-success">Try &raquo;</a></p>
@@ -117,10 +127,9 @@ for details on the model used.
 
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<a href="./interactive-html/InteractiveS3-CellMigration.html"><img src="./img/sim3.png" width="100%"></a>
-		<h2>Simulation 3</h2>
-		<p>Interactive version of the ”Cell migration” simulation in Figure 1c. This model once 
-again depicts a migrating cell as defined in <a href="https://doi.org/10.1371/journal.pcbi.1004280">(Niculescu et al., 2015)</a>, but now lets the 
-cell migrate between two obstacles.
+		<h2>Simulation 4</h2>
+		<p>Interactive demo of the ”Cell migration” simulation in Figure 1c (for a 
+		full explorable, see <a href="./interactive-html/InteractiveS1-ActModel.html">Simulation 2</a>).
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS3-CellMigration.html" class="btn btn-success">Try &raquo;</a></p>
@@ -129,12 +138,10 @@ cell migrate between two obstacles.
 
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<a href="./interactive-html/InteractiveS4-CellSorting.html"><img src="./img/sim4.png" width="100%"></a>
-		<h2>Simulation 4</h2>
-		<p>Interactive version of the ”Cell sorting” simulation in 
-Figure 1c. This classic model was the first CPM as developed by Graner and Glazier 
-<a href="https://doi.org/10.1103/PhysRevLett.69.2013">(Graner and Glazier, 1992)</a>. It contains two types of cells, and the adhesion between 
-neighbouring cells depends on their type. This results in spontaneous sorting of the 
-two mixed cell populations, as is visible in this simulation.
+		<h2>Simulation 5</h2>
+		<p>In this explorable ("Cell sorting" in Figure 1c), 
+		we go back to the classics: the very first CPM that was 
+		designed by Graner and Glazier as a model for cell sorting.
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS4-CellSorting.html" class="btn btn-success">Try &raquo;</a></p>
@@ -143,9 +150,9 @@ two mixed cell populations, as is visible in this simulation.
 
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<a href="./interactive-html/InteractiveS5-CellDivision.html"><img src="./img/sim5.png" width="100%"></a>
-		<h2>Simulation 5</h2>
-		<p>Interactive version of the ”Dividing cells” simulation in Figure 1c. In this model, 
-cells have a probability of dividing after each step of the CPM simulation.
+		<h2>Simulation 6</h2>
+		<p>This explorable (”Dividing cells” in Figure 1c) shows what happens when 
+		we link the CPM spatial dynamics and cell shapes to other processes, like cell division.
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS5-CellDivision.html" class="btn btn-success">Try &raquo;</a></p>
@@ -154,11 +161,10 @@ cells have a probability of dividing after each step of the CPM simulation.
 	
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<a href="./interactive-html/InteractiveS6-CollectiveMigration.html"><img src="./img/sim6.png" width="100%"></a>
-		<h2>Simulation 6</h2>
-		<p>Interactive simulation of ”collective migration”. This simulation is an extension of 
-Interactive Simulation S1, but now contains more than one cell and allows users to tune 
-more different CPM parameters. See also Application S1. This simulation also serves as 
-an example of how interactive CPM simulations can be used to tune parameters.
+		<h2>Simulation 7</h2>
+		<p>Interactive simulation of ”collective migration”. This simulation is used in
+		 Application S1. It also exemplifies how interactive CPM simulations can be used 
+		 to tune parameters.
 	<br><br><br></p>
 		<div class="bottom">
 		<p><a href="./interactive-html/InteractiveS6-CollectiveMigration.html" class="btn btn-success">Try &raquo;</a></p>
@@ -246,26 +252,30 @@ corresponding README to see how to use this code.</p>
 <div class="row">
 	<div class="col-md-6 col-lg-3 col-xl-2">
 			<h2>Source Script 1</h2>
-			<p>Node version of the ”Game of Life” simulation in Figure 1c. This Artistoo script corresponds to Interactive Simulation S2.
+			<p>Node version of the ”Game of Life” simulation in Figure 1c. 
+			See also Interactive Simulation S3.
 		</p>
 
 	</div>
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<h2>Source Script 2</h2>
 		<p>
-			Node version of the ”Cell migration” simulation in Figure 1c. This Artistoo script corresponds to Interactive Simulation S3.
+			Node version of the ”Cell migration” simulation in Figure 1c. 
+			See also Interactive Simulation S2 and S4.
 		</p>
 	</div>
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<h2>Source Script 3</h2>
 		<p>
-			Node version of the ”Cell sorting” simulation in Figure 1c. This Artistoo script corresponds to Interactive Simulation S4.
+			Node version of the ”Cell sorting” simulation in Figure 1c. 
+			See also Interactive Simulation S5.
 		</p>
 	</div>	
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<h2>Source Script 4</h2>
 		<p>
-			Node version of the ”Dividing cells” simulation in Figure 1c. This Artistoo script corresponds to Interactive Simulation S5.
+			Node version of the ”Dividing cells” simulation in Figure 1c. 
+			See also Interactive Simulation S6.
 		</p>
 	</div>	
 
@@ -273,7 +283,8 @@ corresponding README to see how to use this code.</p>
 	<div class="col-md-6 col-lg-3 col-xl-2">
 		<h2>Source Script 5</h2>
 		<p>
-			Artistoo node script to run the cell sorting model with a variable grid size; corresponds to Figure 1d.
+			Artistoo node script to run the cell sorting model with a variable 
+			grid size; used to generate Figure 1d. See also Interactive Simulation S5.
 		</p>
 	</div>
 
