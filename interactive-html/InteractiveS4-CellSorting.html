@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
 <title>CellSorting</title>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <link rel="stylesheet" href="src/style.css">
 <script src="src/sliders.js"></script>
-<script src="../build/artistoo.js"></script>
+<script src="src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -256,7 +258,7 @@ but now:</p>
 	\(J_{\text{kind 1, kind 1}}\), \(J_{\text{kind 2, kind 2}}\), 
 	\(J_{\text{kind 1, kind 2}}\), and</li>
 	<li>To encode the "differential adhesion": 
-	$$J_{\text{kind 1, kind 1}}, J_{\text{kind 2, kind 2}} \lt J_{\text{kind 1, kind 2}}$$ 
+	<div class="mathjaxcontainer">$$J_{\text{kind 1, kind 1}}, J_{\text{kind 2, kind 2}} \lt J_{\text{kind 1, kind 2}}$$ </div>
 	(i.e., assign a larger penalty to cell contacts if the cells belong to different types)</li>
 </ul>
 

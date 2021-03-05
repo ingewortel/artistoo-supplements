@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
 <title>CollectiveMigration</title>
-<style type="text/css">
-body{
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-		 Helvetica, Arial, "Lucida Grande", sans-serif;
-	 padding : 15px;
-}
-td {
-	 padding: 10px;
-	 vertical-align: top;
-}
-</style>
+<link rel="stylesheet" href="src/style.css">
 
 
-<script src="../build/artistoo.js"></script>
+<script src="src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -98,7 +90,12 @@ let sim, meter
 
 function initialize(){
 	sim = new CPM.Simulation( config, {} )
-
+	// Set the canvas manually so it can go in a defined <div></div> container.
+	sim.Cim = new CPM.Canvas( sim.C, {
+		zoom:sim.conf.zoom, 
+		parentElement : document.getElementById("sim")
+	} )
+	sim.helpClasses[ "canvas" ] = true
 	step()
 }
 
@@ -156,9 +153,19 @@ function killAllCells(){
 </script>
 </head>
 <body onload="initialize()">
-<h1>CollectiveMigration</h1>
-<p>
-<br>
+<button class="homebtn" onclick="window.location.href='../index.html'">Home</button>
+
+<div class="container">
+<h1>Collective Migration</h1>
+<p> The following simulation is an example of an interactive simulation that can help with
+parameter tuning. It is also used in the provided <a href="../applications/ApplicationS1-teaching-exercise.pdf">classroom exercise</a>. 
+To learn about this model, please check out the explorables describing the 
+<a href="Tutorial-CPM.html">CPM</a> and the <a href="InteractiveS1-ActModel.html">
+migration model</a>. <br><br>
+</p>
+<div class="simcontainer" id = "sim" >
+
+<div class="slidecontainer">
 <button onclick="startsim()">start</button>
 <button onclick="stopsim()">stop</button>
 <button onclick="seedCells(1)">seed cell</button>
@@ -167,9 +174,6 @@ function killAllCells(){
 <button onclick="killCell()">remove cell</button>
 <button onclick="killAllCells()">remove all cells</button>
 <br>
-
-
-<div class="slidecontainer">
 <form autocomplete="off">
 <table>
 <tr>
@@ -216,6 +220,9 @@ function killAllCells(){
 </table>
 </form>
 </div>
-</p>
+</div>
+
+
+</div>
 </body>
 </html>

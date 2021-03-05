@@ -44,8 +44,18 @@ cite{
 	 text-align:justify;
 }
 
+.mathjaxcontainer{
+	max-width:600px;
+	margin:auto;
+	display: block;
+  overflow: auto;
+}
+
+
+
 .simcontainer {
 	text-align:center;
+	overflow: auto
 }
 
 .homebtn{
@@ -113,3 +123,7 @@ cite{
 body {
   margin: 2rem;
 }
+
+
+::-webkit-scrollbar { -webkit-appearance: none; height: 7px; width: 7px} 
+::-webkit-scrollbar-thumb { border-radius: 4px; background-color: rgba(0,0,0,.5); box-shadow: 0 0 1px rgba(255,255,255,.5); }

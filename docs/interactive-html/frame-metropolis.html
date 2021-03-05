@@ -14,7 +14,7 @@ body{
 
 </style>
 
-<script src="../build/artistoo.js"></script>
+<script src="./src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -31,7 +31,7 @@ let config = {
 		T : 20,
 		J : [[0,10],[10,0]],
 		V : [0,4],
-		LAMBDA_V : [0,30]
+		LAMBDA_V : [0,20]
 	},
 	
 	simsettings : {
@@ -41,7 +41,6 @@ let config = {
 											// non-background cellkinds.
 		// Runtime etc
 		BURNIN : 0,
-		RUNTIME_BROWSER : 0,
 		
 		// Visualization
 		CANVASCOLOR : "eaecef",
@@ -57,6 +56,10 @@ let config = {
 let sim, t = 0, cid1, cid2, attempt = 1, phase = 0, source = [1,1], target = [0,0]
 let play = false, ready = false
 
+// trick for the demo, to ensure not too many "useless" same-cell copy attempts in a row
+const maxUseless = 2
+let useless=0
+
 let custommethods = {
 		drawCanvas : drawCanvas,
 		drawPixBorders : drawPixBorders,
@@ -66,9 +69,9 @@ let custommethods = {
 function initializeGrid(){
 	const cid = this.C.makeNewCellID(1)
 	this.C.setpix( [2,2], cid )
-	this.C.setpix( [2,3], cid )
-	this.C.setpix( [3,2], cid )
-	this.C.setpix( [1,1], cid )
+	this.C.setpix( [2,4], cid )
+	this.C.setpix( [4,2], cid )
+	this.C.setpix( [3,1], cid )
 }
 
 function initialize(){
@@ -90,6 +93,7 @@ function next(){
 		case 0: {
 			target = randomPixel()
 			source = randomNeighbor( target )
+			
 			drawSource()
 			break
 		}
@@ -119,7 +123,22 @@ function randomPixel(){
 
 function randomNeighbor(p){
 	const Ni = sim.C.grid.neigh( p )
-	return Ni[sim.C.ran(0,Ni.length-1)]
+	let nn = Ni[sim.C.ran(0,Ni.length-1)]
+	
+	if( useless === maxUseless ){
+		while( sim.C.pixt(nn) == sim.C.pixt(target) ){
+			nn = Ni[sim.C.ran(0,Ni.length-1)]
+			useless=0
+		}
+	} else {
+		if( sim.C.pixt(nn) == sim.C.pixt(target) ){ 
+			useless++ 
+		} else {
+			useless= 0
+		}
+	}
+	
+	return nn
 }
 
 function manualStep(){
@@ -201,11 +220,15 @@ function instruct(){
 				const dH = sim.C.deltaH ( sim.C.grid.p2i(source), sim.C.grid.p2i(target), sim.C.pixt(source), sim.C.pixt(target) )
 				let instr = "&Delta;H = " + dH 
 				if( dH < 0 ){
-					 instr += " < 0<br>P<sub>copy</sub> = 1; Success!"
+					 instr += " < 0<br>P<sub>copy</sub> = 1;<br>Success!"
 					 sim.C.setpixi( sim.C.grid.p2i(target), sim.C.pixt(source) )
 					 sim.drawCanvas(); drawSource(); drawTarget
+				} else if ( dH == 0 ){
+					instr += "<br>P<sub>copy</sub> = 1;<br>Success!"
+					sim.C.setpixi( sim.C.grid.p2i(target), sim.C.pixt(source) )
+					sim.drawCanvas(); drawSource(); drawTarget
 				} else {
-					instr += " < 0<br>P<sub>copy</sub> = " + Math.exp( -dH / sim.C.conf.T ).toPrecision(3)
+					instr += " > 0<br>P<sub>copy</sub> = " + Math.exp( -dH / sim.C.conf.T ).toPrecision(3)
 					if( sim.C.docopy(dH) ){
 						instr += "<br>Success!"
 						sim.C.setpixi( sim.C.grid.p2i(target), sim.C.pixt(source) )

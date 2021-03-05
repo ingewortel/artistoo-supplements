@@ -12,7 +12,7 @@ body{
 
 </style>
 
-<script src="../build/artistoo.js"></script>
+<script src="./src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -115,10 +115,10 @@ function drawContacts(){
 		const p = i[0], cid = i[1]
 		for( let n of this.C.neigh(p) ){
 			const cid2 = this.C.pixt(n)
-			if( cid2 !== cid ){
+			if( cid2 != cid ){
 				ctx.moveTo( (p[0]+0.5)*zoom, (p[1]+0.5)*zoom )
 				ctx.lineTo( (n[0]+0.5)*zoom, (n[1]+0.5)*zoom )
-				nc++
+				nc+=2
 			}
 		}
 	}

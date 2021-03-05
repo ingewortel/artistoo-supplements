@@ -7,7 +7,7 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <script src="src/sliders.js"></script>
-<script src="../build/artistoo.js"></script>
+<script src="src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -145,7 +145,7 @@ but we'll briefly revisit the basics here.</p>
 <p>Here is an example of a very simple CPM model:</p>
 
 <div>
-	<iframe src="./frame-basic.html" width="100%" height="180px"></iframe>
+	<iframe src="./frame-basic.html" width="100%" height="200px"></iframe>
 </div>
 
 <p>The basic mechanism is as follows: </p>
@@ -158,7 +158,7 @@ but we'll briefly revisit the basics here.</p>
 	a global <i>energy</i>, defined by the Hamiltonian \(H\) (an equation defined by 
 	the modeller). Attempted conquests are more likely to succeed when they
 	are energetically favourable such that: 
-	$$\Delta H_\text{attempt} = H_\text{before} - H_\text{after} \lt 0 $$</li>
+	<div class="mathjaxcontainer">$$\Delta H_\text{attempt} = H_\text{before} - H_\text{after} \lt 0 $$</div></li>
 	<li>This global energy \(H\) differs per model, but in general it defines the
 	"physical laws" followed by the cell. A typical \(H\) contains energy terms that
 	reward:
@@ -189,7 +189,7 @@ an extension of
 the CPM that lets cells migrate actively:</p>
 
 <div>
-	<iframe src="./frame-actbasic.html" width="100%" height="180px"></iframe>
+	<iframe src="./frame-actbasic.html" width="100%" height="200px"></iframe>
 </div>
 
 <p>Real cells migrate by manipulating their inner "cytoskeleton", which is made of 
@@ -210,20 +210,22 @@ likely to protrude again. In more detail:</p>
 <ul>
 	<li>If a pixel is newly added to a cell at time \(t = t^*\), we say that the cell has <b>protruded</b>
 	to gain that pixel. It then gets a "protrusive activity": 
-	$$A(t^*) = \text{max}_\text{act}$$
+	<div class="mathjaxcontainer">$$A(t^*) = \text{max}_\text{act}$$</div>
 	(with \(\text{max}_\text{act}\) a model parameter). The colored pixels in the 
 	simulation above represent "active" pixels; </li>
 	<li>Over time, this activity decreases again with a point
 	per time step (until it hits zero): 
-	$$A(t+1) = \begin{cases} A(t) - 1 & A(t) \geq 1\\
-	0 & A(t) = 0 \end{cases}$$
+	<div class="mathjaxcontainer">$$A(t+1) = \begin{cases} A(t) - 1 & A(t) \geq 1\\
+	0 & A(t) = 0 \end{cases}$$</div>
 	This is visible in the color gradient of the pixels in the simulation above; 
 	pixels gradually change from red to green as their activity drops, until they 
 	become black when their activity is completely gone. 
 	Thus, the parameter  max<sub>act</sub> represents an activity <b>memory</b>.</li>
 	<li>Meanwhile, the activity feeds back on cell behavior because we add a term to the global
 	energy equation:
+		<div class="mathjaxcontainer">
 		$$\Delta H_\text{act} (p_s \rightarrow p_t) = -\frac{\lambda_\text{act}}{\text{max}_\text{act}} (\text{GM}_\text{act}(p_s) - \text{GM}_\text{act}(p_t))$$
+		</div>
 	Here, we consider an attempt of pixel \(p_s\) to copy its identity into pixel \(p_t\),
 	and we assign an energetic reward if \(p_s\) is in a more active local area than \(p_t\).
 	(This local activity is represented by the geometric mean \(\text{GM}_\text{act}(p)\)
@@ -293,6 +295,17 @@ Below, you can explore the model and the effects of its two main parameters:
 	memory means that the protrusion extends further into the cell; the cell shape also
 	becomes broader. Protrusion hardly ever die out, and the cell hardly ever turns.</li>
 </ul>
+
+<h2>Obstacle Course</h2>
+
+<p>The nice thing about the CPM is that interactions between cells and their environment
+arise naturally, because pixels can only ever belong to one cell. For example, we can now
+explore what happens when the cell's internal protrusion dynamics start interacting
+with environmental obstacles: </p>
+
+<div>
+	<iframe src="./frame-obstacles.html" width="100%" height="450px"></iframe>
+</div>
 
 <h2>Summary</h2>
 

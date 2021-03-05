@@ -27,19 +27,21 @@ let config = {
 	field_size : [6,6],
 	
 	conf : {
-		T : 15,
+		T : 10,
 		J : [[0,10],[10,0]],
-		torus : [false,false]
+		V : [0,4],
+		LAMBDA_V : [0,20],
+		P : [0,15],
+		LAMBDA_P : [0,1]
 	},
 	
 	simsettings : {
 	
 		// Cells on the grid
-		NRCELLS : [2],						// Number of cells to seed for all
+		NRCELLS : [1],						// Number of cells to seed for all
 											// non-background cellkinds.
 		// Runtime etc
-		BURNIN : 0,
-		RUNTIME_BROWSER : 0,
+		BURNIN : 4,
 		
 		// Visualization
 		CANVASCOLOR : "eaecef",
@@ -52,10 +54,9 @@ let config = {
 	}
 }
 /*	---------------------------------- */
-let sim, meter, nc = 0, cid
+let sim, meter, nc = 0, per_diff = 0, H_per = 0
 
 let custommethods = {
-		initializeGrid : initializeGrid,
 		drawCanvas : drawCanvas,
 		drawPixBorders : drawPixBorders,
 		drawContacts : drawContacts,
@@ -76,6 +77,7 @@ function initialize(){
 
 function step(){
 	sim.drawCanvas()
+	checkPerimeter()
 	requestAnimationFrame( step )
 }
 
@@ -83,75 +85,80 @@ function next(){
 	sim.step()
 }
 
-function initializeGrid(){
-	if( typeof cid === "undefined"){
-		cid = this.C.makeNewCellID(1)
-	}
-	for( let x = 0; x < this.C.extents[0]; x++ ){
-		for( let y = 0; y < this.C.extents[1]; y++ ){
-			if( Math.random() < 0.5){
-				this.C.setpix( [x,y], cid )
-			}
-		}
-	}
-}
 
 function drawCanvas(){
 	this.Cim.clear( this.conf.CANVASCOLOR )
-	this.drawPixBorders()
-	this.Cim.drawCells( 1, this.conf.CELLCOLOR[0])
+	this.Cim.drawCells( 1, "AAAAAA")
 	this.drawContacts()
 	this.drawBorderNodes()
+}
+
+function checkPerimeter(){
+	
+	document.getElementById("vol").innerHTML = nc
+	per_diff = ( nc - sim.C.conf.P[1] )
+	if( per_diff >= 0 ){
+		document.getElementById("voldiff").innerHTML = "+" + per_diff
+	} else {
+		document.getElementById("voldiff").innerHTML = per_diff
+	}
+	H_per = sim.C.conf.LAMBDA_P[1] * per_diff*per_diff
+	document.getElementById("hvol").innerHTML = "&lambda;<sub>perimeter</sub> x (P - P<sub>t</sub>)<sup>2</sup> " +
+		"<br>= " + sim.C.conf.LAMBDA_P[1] + " x " + Math.abs(per_diff) + "<sup>2</sup> = " + H_per
 }
 
 function drawContacts(){
 	let ctx = this.Cim.ctx
 	const zoom = this.Cim.zoom
+	const cid = sim.C.cellIDs().next().value
+	
+	
 	ctx.lineWidth = .05*zoom
 	ctx.strokeStyle = "#0000FF"
 	ctx.beginPath()
 	nc = 0
 	for( let i of this.C.cellBorderPixels() ){
-		const p = i[0], cid = i[1]
-		for( let n of this.C.neigh(p) ){
-			const cid2 = this.C.pixt(n)
-			if( cid2 != cid ){
-				ctx.moveTo( (p[0]+0.5)*zoom, (p[1]+0.5)*zoom )
-				ctx.lineTo( (n[0]+0.5)*zoom, (n[1]+0.5)*zoom )
-				nc+=2
+		const p = i[0], cidi = i[1]
+		if( cidi == cid ){
+			for( let n of this.C.neigh(p) ){
+				const cid2 = this.C.pixt(n)
+				if( cid2 !== cidi ){
+					ctx.moveTo( (p[0]+0.5)*zoom, (p[1]+0.5)*zoom )
+					ctx.lineTo( (n[0]+0.5)*zoom, (n[1]+0.5)*zoom )
+					nc++
+				}
 			}
 		}
 	}
 	ctx.stroke()
-	setNum(nc)
 
 }
+
 
 function drawBorderNodes(){
 	let ctx = this.Cim.ctx
 	this.Cim.col("000000")
 	const zoom = this.Cim.zoom
+	const cid = this.C.cellIDs().next().value
 	for( let i of this.C.cellBorderPixels() ){
-		const p = i[0], cid = i[1]
-		for( let n of this.C.neigh(p) ){
-			const cid2 = this.C.pixt(n)
-			if( cid2 < cid ){
-				ctx.beginPath()
-				ctx.arc( (p[0]+0.5)*zoom, (p[1]+0.5)*zoom, 0.15*zoom, 2*Math.PI, false )
-				ctx.fill()
-				ctx.beginPath()
-				ctx.arc( (n[0]+0.5)*zoom, (n[1]+0.5)*zoom, 0.15*zoom, 2*Math.PI, false )
-				ctx.fill()
+		const p = i[0], cidi = i[1]
+		if( cidi == cid ){
+			for( let n of this.C.neigh(p) ){
+				const cid2 = this.C.pixt(n)
+				if( cid2 < cidi ){
+					ctx.beginPath()
+					ctx.arc( (p[0]+0.5)*zoom, (p[1]+0.5)*zoom, 0.15*zoom, 2*Math.PI, false )
+					ctx.fill()
+					ctx.beginPath()
+					ctx.arc( (n[0]+0.5)*zoom, (n[1]+0.5)*zoom, 0.15*zoom, 2*Math.PI, false )
+					ctx.fill()
+				}
 			}
 		}
 	}
 
 }
 
-function setNum(nc){
-	document.getElementById("nc").innerHTML = nc
-	document.getElementById("nc1").innerHTML = nc
-}
 
 function drawPixBorders(){
 	this.Cim.col( "FFFFFF" )
@@ -173,8 +180,8 @@ function drawPixBorders(){
 
 
 <div id="simcontainer" class="simcontainer">
-<p># Contacts: <span style="color:blue" id="nc"></span><br>
-H<sub>adhesion</sub> = J x <span style="color:blue" id="nc1"></span>
+<p>Current perimeter: <span style="color:gray" id="vol"></span> (<span style="color:gray" id="voldiff"></span>)<br>
+H<sub>perimeter</sub> = <span id="hvol"></span>
 </p>
 <button onclick="next()">step</button><button onclick="window.location.reload()">reset</button><br><br>
 </div>

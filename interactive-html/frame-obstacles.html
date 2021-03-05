@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width">
 <title>ActModel</title>
 <link rel="stylesheet" href="src/style.css">
-<script src="src/sliders.js"></script>
-<script src="src/artistoo.js"></script>
+<style type="text/css">
+body{
+	 padding-left : 5px;
+	 padding-right: 5px;
+	 padding-top: 0px;
+	 margin: 0px;
+}
+
+</style>
+
+<script src="./src/artistoo.js"></script>
 <script>
 "use strict"
-
-
-/*	----------------------------------
-	CONFIGURATION SETTINGS
-	----------------------------------
-*/
 let config = {
 
 	// Grid settings
@@ -54,7 +55,7 @@ let config = {
 	simsettings : {
 	
 		// Cells on the grid
-		NRCELLS : [1],						// Number of cells to seed for all
+		NRCELLS : [0],						// Number of cells to seed for all
 											// non-background cellkinds.
 		// Runtime etc
 		BURNIN : 0,
@@ -118,23 +119,8 @@ function initializeGrid(){
 	
 		// add the initializer if not already there
 		if( !this.helpClasses["gm"] ){ this.addGridManipulator() }
-	
-		let nrcells = this.conf["NRCELLS"], cellkind, i
 		this.buildChannel()
-		
-		// Seed the right number of cells for each cellkind
-		for( cellkind = 0; cellkind < nrcells.length; cellkind ++ ){
-			
-			for( i = 0; i < nrcells[cellkind]; i++ ){
-				// first cell always at the midpoint. Any other cells
-				// randomly.				
-				if( i == 0 ){
-					this.gm.seedCellAt( cellkind+1, this.C.midpoint )
-				} else {
-					this.gm.seedCell( cellkind+1 )
-				}
-			}
-		}
+		this.gm.seedCellAt( 1, [50,50] )
 }
 	
 function buildChannel(){
@@ -142,27 +128,27 @@ function buildChannel(){
 	
 		this.channelvoxels = []
 		
-		//obstacle 1 at 50,100 w radius 10
-		let center = [50,100], radius = 10
-		for( let xx = center[0]-radius; xx <= center[0]+radius; xx++ ){
-			for( let yy = center[1]-radius; yy <= center[1]+radius; yy++){
-				let dx = Math.abs( xx-center[0] ), dy = Math.abs( yy-center[1] )
-				if( Math.sqrt( dx*dx + dy*dy ) < radius ){
-					this.channelvoxels.push( [xx,yy] )
-				}	
+		
+		const xOffset = 30, yOffset = 30
+		const dx = Math.floor( this.C.extents[0]/3 ), dy = Math.floor( this.C.extents[1]/3 )
+		const radius = 10 
+		
+		for( let x = xOffset; x < this.C.extents[0]; x+= dx ){
+			for( let y = yOffset; y < this.C.extents[1]; y+= dy ){
+				const center = [x,y]
+				
+				for( let xx = center[0]-radius; xx <= center[0]+radius; xx++ ){
+					for( let yy = center[1]-radius; yy <= center[1]+radius; yy++){
+						let dx = Math.abs( xx-center[0] ), dy = Math.abs( yy-center[1] )
+						if( Math.sqrt( dx*dx + dy*dy ) < radius ){
+							this.channelvoxels.push( [xx,yy] )
+						}	
+					}
+				}
+				
 			}
 		}
 		
-		// obstacle 2 at 150,100 w radius 10
-		center = [150,100]
-		for( let xx = center[0]-radius; xx <= center[0]+radius; xx++ ){
-			for( let yy = center[1]-radius; yy <= center[1]+radius; yy++){
-				let dx = Math.abs( xx-center[0] ), dy = Math.abs( yy-center[1] )
-				if( Math.sqrt( dx*dx + dy*dy ) < radius ){
-					this.channelvoxels.push( [xx,yy] )
-				}	
-			}
-		}
 		
 		
 		this.C.add( new CPM.BorderConstraint({
@@ -171,62 +157,16 @@ function buildChannel(){
 		
 }
 
-function setSliders(){
-	document.getElementById("mact").value = config.conf.MAX_ACT[1]
-	document.getElementById("lact").value = config.conf.LAMBDA_ACT[1]
-}
-
-
 
 // No custom methods.
 </script>
 </head>
-<body onload="initialize();setSliders();initializeSliders()">
-<button class="homebtn" onclick="window.location.href='../index.html'">Home</button>
+<body onload="initialize()">
 
 <div class="container">
 
-<h1>Cell migration</h1>
-
-<div>
-<p>
-Cellular Potts Model of cell migrating between obstacles. You can adjust the max<sub>act</sub> and 
-&lambda;<sub>act</sub> parameters using the sliders below. This is just a small demo of the 
-model as used in Figure 1C; for a full explorable (including model explanation), 
-check out <a href="InteractiveS1-ActModel.html">this page</a>.
-</p>
-</div>
-
-<div class="simcontainer" id = "sim">
-<table>
-<tr>
-	<td style="width:20%">max<sub>act</sub></td>
-	<td style="width:5%">0</td>
-	<td style="width:70%"> 
-		<div class="range-wrap">
-		  <input type="range" class="range" min="0" max="100" id="mact" oninput="sim.C.getConstraint('ActivityConstraint').conf.MAX_ACT[1]=this.value" >
-		  <output class="bubble"></output>
-		</div>
-	</td>
-	<td style="width:5%">100</td>
-</tr>
-<tr>
-	<td style="width:20%">&lambda;<sub>act</sub></td>
-	<td style="width:5%">0</td>
-	<td style="width:70%"> 
-		<div class="range-wrap">
-		  <input type="range" class="range" min="0" max="1000" id="lact" oninput="sim.C.getConstraint('ActivityConstraint').conf.LAMBDA_ACT[1]=this.value">
-		  <output class="bubble"></output>
-		</div>
-	</td>
-	<td style="width:5%">1000</td>
-</tr>
-</table>
-<br>
+<div id="sim" class="simcontainer"></div>
 
 </div>
-
-</div>
-
 </body>
 </html>

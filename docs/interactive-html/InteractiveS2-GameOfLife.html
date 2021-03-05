@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
 <title>Game of Life</title>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <link rel="stylesheet" href="src/style.css">
 <script src="src/sliders.js"></script>
-<script src="../build/artistoo.js"></script>
+<script src="src/artistoo.js"></script>
 <script>
 "use strict"
 
@@ -288,12 +290,13 @@ function initialize(){
 		<li>At every time point \(t\), we evaluate each pixel's 
 			<a href ="https://en.wikipedia.org/wiki/Moore_neighborhood">Moore neighborhood</a> 
 			(its 8 neighbors, including diagonal neighbors) to determine its state at time \(t+1\): 
+			<div class="mathjaxcontainer">
 			$$p(t+1) = \begin{cases}
 				0 & \text{if } p(t) = 1, \# \text{occupied neighbors} \leq 1 \\
 				0 & \text{if } p(t) = 1, \# \text{occupied neighbors} \geq 4 \\
 				1 & \text{if } p(t) = 0, \# \text{occupied neighbors exactly }  3 \\
 				p(t) & \text{otherwise}
-			\end{cases}$$
+			\end{cases}$$</div>
 		</li>
 	</ul>
 
