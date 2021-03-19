@@ -79,7 +79,7 @@ that the model never reaches a steady state, but it <i>does</i> guide behaviour 
 	<li>Pick a random pixel on the grid as the "source" pixel \(p_s\);</li>
 	<li>Pick a random neighbor of \(s\) as the "target" pixel \(p_t\); (here, we use 
 	the <a href ="https://en.wikipedia.org/wiki/Moore_neighborhood">Moore neighborhood</a> 
-	where each pixel has 8 neighbors: top, down, bottom, left, and the 4 diagonal pixels)</li>
+	where each pixel has 8 neighbors: top, right, bottom, left, and the 4 diagonal pixels)</li>
 	<li>If \(\text{cell}(p_s,t) \neq \text{cell}(p_t, t)\) (i.e., the pixels do
 	not belong to the same cell), then 
 	let \(p_s\) try to "copy" itself into \(p_t\) such that 
