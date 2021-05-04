@@ -1,5 +1,8 @@
 # Artistoo: build, share, and explore simulations of cells and tissues in the web browser (Supplementary Materials)
 
+[![DOI](https://zenodo.org/badge/289025514.svg)](https://zenodo.org/badge/latestdoi/289025514)
+
+
 This repository contains supplementary materials (source code and simulations) for the 
 manuscript *"Artistoo: build, share, and explore simulations of cells and tissues in the 
 web browser"* on our software package [Artistoo](https://github.com/ingewortel/artistoo). 
