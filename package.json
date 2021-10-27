@@ -8,7 +8,7 @@
 		"esdoc-standard-plugin": "^1.0.0",
 		"fs": "0.0.1-security",
 		"jasmine": "^3.5.0",
-		"mathjs": "^5.8.0",
+		"mathjs": "^7.5.1",
 		"mersenne-twister": "^1.1.0",
 		"rollup": "^1.2.3",
 		"rollup-plugin-eslint": "^5.0.0",
